@@ -1,0 +1,116 @@
+_program
+  _class
+    Main
+    Object
+    "lubtest.test"
+    (
+    _method
+      main
+      Int
+      _int
+        0
+      : Int
+    )
+  _class
+    Z
+    Object
+    "lubtest.test"
+    (
+    )
+  _class
+    A
+    Z
+    "lubtest.test"
+    (
+    )
+  _class
+    B
+    Z
+    "lubtest.test"
+    (
+    )
+  _class
+    C
+    B
+    "lubtest.test"
+    (
+    )
+  _class
+    D
+    B
+    "lubtest.test"
+    (
+    )
+  _class
+    Test
+    Object
+    "lubtest.test"
+    (
+    _attr
+      a
+      A
+      _no_expr
+      : Object
+    _attr
+      b
+      B
+      _no_expr
+      : Object
+    _attr
+      c
+      C
+      _no_expr
+      : Object
+    _attr
+      d
+      D
+      _no_expr
+      : Object
+    _attr
+      z
+      Z
+      _no_expr
+      : Object
+    _method
+      f
+      Z
+      _cond
+        _bool
+          1
+        : Bool
+        _object
+          a
+        : _no_type
+        _object
+          b
+        : _no_type
+      : _no_type
+    _method
+      g
+      Object
+      _cond
+        _bool
+          1
+        : Bool
+        _object
+          a
+        : _no_type
+        _object
+          b
+        : _no_type
+      : _no_type
+    _method
+      h
+      B
+      _cond
+        _bool
+          1
+        : Bool
+        _object
+          c
+        : _no_type
+        _object
+          a
+        : _no_type
+      : _no_type
+    )

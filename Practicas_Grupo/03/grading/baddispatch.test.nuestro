@@ -1,0 +1,55 @@
+_program
+  _class
+    Main
+    Object
+    "baddispatch.test"
+    (
+    _method
+      main
+      Object
+      _int
+        0
+      : Int
+    )
+  _class
+    Animal
+    Object
+    "baddispatch.test"
+    (
+    )
+  _class
+    Cow
+    Animal
+    "baddispatch.test"
+    (
+    _method
+      moo
+      String
+      _string
+        "moo"
+      : String
+    )
+  _class
+    Blerg
+    Object
+    "baddispatch.test"
+    (
+    _method
+      foo
+      Object
+      _let
+        cow
+        Animal
+        _new
+          Cow
+        : Cow
+        _dispatch
+          _object
+            cow
+          : Animal
+          moo
+          (
+          )
+        : _no_type
+      : _no_type
+    )

@@ -1,0 +1,19 @@
+_program
+  _class
+    Main
+    Object
+    "letself.test"
+    (
+    _method
+      main
+      Int
+      _let
+        self
+        Int
+        _no_expr
+        : Object
+        _int
+          0
+        : Int
+      : Int
+    )

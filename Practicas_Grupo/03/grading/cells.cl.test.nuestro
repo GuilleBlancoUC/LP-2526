@@ -1,0 +1,458 @@
+_program
+  _class
+    CellularAutomaton
+    IO
+    "cells.cl.test"
+    (
+    _attr
+      population_map
+      String
+      _no_expr
+      : Object
+    _method
+      init
+      _formal
+        map
+        String
+      SELF_TYPE
+      _block
+        _assign
+          population_map
+          _object
+            map
+          : String
+        : Object
+        _object
+          self
+        : CellularAutomaton
+      : CellularAutomaton
+    _method
+      print
+      SELF_TYPE
+      _block
+        _dispatch
+          _object
+            self
+          : CellularAutomaton
+          out_string
+          (
+          _dispatch
+            _object
+              population_map
+            : _no_type
+            concat
+            (
+            _string
+              "\n"
+            : String
+            )
+          : _no_type
+          )
+        : CellularAutomaton
+        _object
+          self
+        : CellularAutomaton
+      : CellularAutomaton
+    _method
+      num_cells
+      Int
+      _dispatch
+        _object
+          population_map
+        : _no_type
+        length
+        (
+        )
+      : _no_type
+    _method
+      cell
+      _formal
+        position
+        Int
+      String
+      _dispatch
+        _object
+          population_map
+        : _no_type
+        substr
+        (
+        _object
+          position
+        : Int
+        _int
+          1
+        : Int
+        )
+      : _no_type
+    _method
+      cell_left_neighbor
+      _formal
+        position
+        Int
+      String
+      _cond
+        _eq
+          _object
+            position
+          : Int
+          _int
+            0
+          : Int
+        : Bool
+        _dispatch
+          _object
+            self
+          : CellularAutomaton
+          cell
+          (
+          _sub
+            _dispatch
+              _object
+                self
+              : CellularAutomaton
+              num_cells
+              (
+              )
+            : Int
+            _int
+              1
+            : Int
+          : Int
+          )
+        : String
+        _dispatch
+          _object
+            self
+          : CellularAutomaton
+          cell
+          (
+          _sub
+            _object
+              position
+            : Int
+            _int
+              1
+            : Int
+          : Int
+          )
+        : String
+      : String
+    _method
+      cell_right_neighbor
+      _formal
+        position
+        Int
+      String
+      _cond
+        _eq
+          _object
+            position
+          : Int
+          _sub
+            _dispatch
+              _object
+                self
+              : CellularAutomaton
+              num_cells
+              (
+              )
+            : Int
+            _int
+              1
+            : Int
+          : Int
+        : Bool
+        _dispatch
+          _object
+            self
+          : CellularAutomaton
+          cell
+          (
+          _int
+            0
+          : Int
+          )
+        : String
+        _dispatch
+          _object
+            self
+          : CellularAutomaton
+          cell
+          (
+          _plus
+            _object
+              position
+            : Int
+            _int
+              1
+            : Int
+          : Int
+          )
+        : String
+      : String
+    _method
+      cell_at_next_evolution
+      _formal
+        position
+        Int
+      String
+      _cond
+        _eq
+          _plus
+            _plus
+              _cond
+                _eq
+                  _dispatch
+                    _object
+                      self
+                    : CellularAutomaton
+                    cell
+                    (
+                    _object
+                      position
+                    : Int
+                    )
+                  : String
+                  _string
+                    "X"
+                  : String
+                : Bool
+                _int
+                  1
+                : Int
+                _int
+                  0
+                : Int
+              : Int
+              _cond
+                _eq
+                  _dispatch
+                    _object
+                      self
+                    : CellularAutomaton
+                    cell_left_neighbor
+                    (
+                    _object
+                      position
+                    : Int
+                    )
+                  : String
+                  _string
+                    "X"
+                  : String
+                : Bool
+                _int
+                  1
+                : Int
+                _int
+                  0
+                : Int
+              : Int
+            : Int
+            _cond
+              _eq
+                _dispatch
+                  _object
+                    self
+                  : CellularAutomaton
+                  cell_right_neighbor
+                  (
+                  _object
+                    position
+                  : Int
+                  )
+                : String
+                _string
+                  "X"
+                : String
+              : Bool
+              _int
+                1
+              : Int
+              _int
+                0
+              : Int
+            : Int
+          : Int
+          _int
+            1
+          : Int
+        : Bool
+        _string
+          "X"
+        : String
+        _string
+          "."
+        : String
+      : String
+    _method
+      evolve
+      SELF_TYPE
+      _let
+        position
+        Int
+        _no_expr
+        : Object
+        _let
+          num
+          Int
+          _dispatch
+            _object
+              self
+            : CellularAutomaton
+            num_cells
+            (
+            )
+          : Int
+          _let
+            temp
+            String
+            _no_expr
+            : Object
+            _block
+              _loop
+                _lt
+                  _object
+                    position
+                  : Int
+                  _object
+                    num
+                  : Int
+                : Bool
+                _block
+                  _assign
+                    temp
+                    _dispatch
+                      _object
+                        temp
+                      : String
+                      concat
+                      (
+                      _dispatch
+                        _object
+                          self
+                        : CellularAutomaton
+                        cell_at_next_evolution
+                        (
+                        _object
+                          position
+                        : Int
+                        )
+                      : String
+                      )
+                    : String
+                  : String
+                  _assign
+                    position
+                    _plus
+                      _object
+                        position
+                      : Int
+                      _int
+                        1
+                      : Int
+                    : Int
+                  : Int
+                : Int
+              : Object
+              _assign
+                population_map
+                _object
+                  temp
+                : String
+              : Object
+              _object
+                self
+              : CellularAutomaton
+            : CellularAutomaton
+          : CellularAutomaton
+        : CellularAutomaton
+      : CellularAutomaton
+    )
+  _class
+    Main
+    Object
+    "cells.cl.test"
+    (
+    _attr
+      cells
+      CellularAutomaton
+      _no_expr
+      : Object
+    _method
+      main
+      SELF_TYPE
+      _block
+        _assign
+          cells
+          _dispatch
+            _new
+              CellularAutomaton
+            : CellularAutomaton
+            init
+            (
+            _string
+              "         X         "
+            : String
+            )
+          : CellularAutomaton
+        : Object
+        _dispatch
+          _object
+            cells
+          : _no_type
+          print
+          (
+          )
+        : _no_type
+        _let
+          countdown
+          Int
+          _int
+            20
+          : Int
+          _loop
+            _lt
+              _int
+                0
+              : Int
+              _object
+                countdown
+              : Int
+            : Bool
+            _block
+              _dispatch
+                _object
+                  cells
+                : _no_type
+                evolve
+                (
+                )
+              : _no_type
+              _dispatch
+                _object
+                  cells
+                : _no_type
+                print
+                (
+                )
+              : _no_type
+              _assign
+                countdown
+                _sub
+                  _object
+                    countdown
+                  : Int
+                  _int
+                    1
+                  : Int
+                : Int
+              : Int
+            : Int
+          : Object
+        : Object
+        _object
+          self
+        : Main
+      : Main
+    )

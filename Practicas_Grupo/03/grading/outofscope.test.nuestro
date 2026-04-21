@@ -1,0 +1,24 @@
+_program
+  _class
+    Main
+    Object
+    "outofscope.test"
+    (
+    _method
+      main
+      Object
+      _block
+        _let
+          x
+          Int
+          _no_expr
+          : Object
+          _int
+            10
+          : Int
+        : Int
+        _object
+          x
+        : Int
+      : Int
+    )

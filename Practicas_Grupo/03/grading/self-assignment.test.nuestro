@@ -1,0 +1,42 @@
+_program
+  _class
+    Main
+    Object
+    "self-assignment.test"
+    (
+    _method
+      main
+      Int
+      _int
+        0
+      : Int
+    )
+  _class
+    A
+    Object
+    "self-assignment.test"
+    (
+    _attr
+      x
+      A
+      _object
+        self
+      : A
+    _method
+      foo
+      _formal
+        x
+        A
+      A
+      _assign
+        self
+        _dispatch
+          _object
+            self
+          : A
+          copy
+          (
+          )
+        : A
+      : A
+    )

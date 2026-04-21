@@ -7,14 +7,14 @@ from termcolor import colored ## Para coloredear la salida en la terminal
 #init()
 
 
-DIRECTORIO = os.path.expanduser("C:\AA_INGENIERIA_INFORMATICA\CUARTO\LENGUAJES_PROGRAMACION\Practicas\LP-2526\Practicas_Grupo")
+DIRECTORIO = os.path.expanduser("./")
 sys.path.append(DIRECTORIO)
 
 from Lexer import *
 from Parser import CoolParser
 from Clases import *
 
-PRACTICA = "02" # Practica que hay que evaluar
+PRACTICA = "03" # Practica que hay que evaluar
 DEBUG = True   # Decir si se lanzan mensajes de debug
 NUMLINEAS = 3   # Numero de lineas que se muestran antes y después de la no coincidencia
 sys.path.append(DIRECTORIO)
@@ -24,7 +24,7 @@ TESTS = [fich for fich in FICHEROS
          if os.path.isfile(os.path.join(DIR, fich)) and
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$",fich)]
 TESTS.sort()
-#TESTS = ["escapedunprintables.cool"]
+#TESTS = ["basic.test"]
 
 if True:
     for fich in TESTS:
@@ -69,7 +69,7 @@ if True:
             g.close()
             j = parser.parse(lexer.tokenize(entrada))
             try:
-                #j.Tipo()
+                j.Tipo()
                 if j and not parser.errores:
                     resultado = '\n'.join([c for c in j.str(0).split('\n')
                                            if c and '#' not in c])
@@ -93,4 +93,6 @@ if True:
                         f.close()
                         g.close()
             except Exception as e:
+                import traceback
+                traceback.print_exc()
                 print(f"Lanza excepción en {fich} con el texto {e}")

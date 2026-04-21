@@ -1,0 +1,37 @@
+_program
+  _class
+    Main
+    Object
+    "anattributenamedself.test"
+    (
+    _method
+      main
+      Int
+      _int
+        0
+      : Int
+    )
+  _class
+    A
+    Object
+    "anattributenamedself.test"
+    (
+    _attr
+      self
+      A
+      _new
+        A
+      : A
+    _method
+      foo
+      _formal
+        x
+        String
+      String
+      _assign
+        x
+        _string
+          "a boy named sue"
+        : String
+      : String
+    )

@@ -1,0 +1,295 @@
+_program
+  _class
+    List
+    Object
+    "list.cl.test"
+    (
+    _method
+      isNil
+      Bool
+      _bool
+        1
+      : Bool
+    _method
+      head
+      Int
+      _block
+        _dispatch
+          _object
+            self
+          : List
+          abort
+          (
+          )
+        : Object
+        _int
+          0
+        : Int
+      : Int
+    _method
+      tail
+      List
+      _block
+        _dispatch
+          _object
+            self
+          : List
+          abort
+          (
+          )
+        : Object
+        _object
+          self
+        : List
+      : List
+    _method
+      cons
+      _formal
+        i
+        Int
+      List
+      _dispatch
+        _new
+          Cons
+        : Cons
+        init
+        (
+        _object
+          i
+        : Int
+        _object
+          self
+        : List
+        )
+      : _no_type
+    )
+  _class
+    Cons
+    List
+    "list.cl.test"
+    (
+    _attr
+      car
+      Int
+      _no_expr
+      : Object
+    _attr
+      cdr
+      List
+      _no_expr
+      : Object
+    _method
+      isNil
+      Bool
+      _bool
+        0
+      : Bool
+    _method
+      head
+      Int
+      _object
+        car
+      : _no_type
+    _method
+      tail
+      List
+      _object
+        cdr
+      : _no_type
+    _method
+      init
+      _formal
+        i
+        Int
+      _formal
+        rest
+        List
+      List
+      _block
+        _assign
+          car
+          _object
+            i
+          : Int
+        : Object
+        _assign
+          cdr
+          _object
+            rest
+          : List
+        : Object
+        _object
+          self
+        : Cons
+      : Cons
+    )
+  _class
+    Main
+    IO
+    "list.cl.test"
+    (
+    _attr
+      mylist
+      List
+      _no_expr
+      : Object
+    _method
+      print_list
+      _formal
+        l
+        List
+      Object
+      _cond
+        _dispatch
+          _object
+            l
+          : List
+          isNil
+          (
+          )
+        : Bool
+        _dispatch
+          _object
+            self
+          : Main
+          out_string
+          (
+          _string
+            "\n"
+          : String
+          )
+        : Main
+        _block
+          _dispatch
+            _object
+              self
+            : Main
+            out_int
+            (
+            _dispatch
+              _object
+                l
+              : List
+              head
+              (
+              )
+            : Int
+            )
+          : Main
+          _dispatch
+            _object
+              self
+            : Main
+            out_string
+            (
+            _string
+              " "
+            : String
+            )
+          : Main
+          _dispatch
+            _object
+              self
+            : Main
+            print_list
+            (
+            _dispatch
+              _object
+                l
+              : List
+              tail
+              (
+              )
+            : List
+            )
+          : Object
+        : Object
+      : Object
+    _method
+      main
+      Object
+      _block
+        _assign
+          mylist
+          _dispatch
+            _dispatch
+              _dispatch
+                _dispatch
+                  _dispatch
+                    _new
+                      List
+                    : List
+                    cons
+                    (
+                    _int
+                      1
+                    : Int
+                    )
+                  : List
+                  cons
+                  (
+                  _int
+                    2
+                  : Int
+                  )
+                : List
+                cons
+                (
+                _int
+                  3
+                : Int
+                )
+              : List
+              cons
+              (
+              _int
+                4
+              : Int
+              )
+            : List
+            cons
+            (
+            _int
+              5
+            : Int
+            )
+          : List
+        : Object
+        _loop
+          _comp
+            _dispatch
+              _object
+                mylist
+              : _no_type
+              isNil
+              (
+              )
+            : _no_type
+          : Bool
+          _block
+            _dispatch
+              _object
+                self
+              : Main
+              print_list
+              (
+              _object
+                mylist
+              : _no_type
+              )
+            : Object
+            _assign
+              mylist
+              _dispatch
+                _object
+                  mylist
+                : _no_type
+                tail
+                (
+                )
+              : _no_type
+            : _no_type
+          : _no_type
+        : Object
+      : Object
+    )

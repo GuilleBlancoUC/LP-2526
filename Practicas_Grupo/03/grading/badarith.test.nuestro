@@ -1,0 +1,30 @@
+_program
+  _class
+    Main
+    Object
+    "badarith.test"
+    (
+    _method
+      main
+      Int
+      _int
+        0
+      : Int
+    )
+  _class
+    A
+    Object
+    "badarith.test"
+    (
+    _method
+      inky
+      Object
+      _plus
+        _int
+          1
+        : Int
+        _string
+          "hello"
+        : String
+      : Int
+    )

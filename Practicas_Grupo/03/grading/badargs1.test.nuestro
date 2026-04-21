@@ -1,0 +1,54 @@
+_program
+  _class
+    Main
+    Object
+    "badargs1.test"
+    (
+    _method
+      main
+      Object
+      _int
+        0
+      : Int
+    )
+  _class
+    A
+    Object
+    "badargs1.test"
+    (
+    _method
+      bar
+      Object
+      _dispatch
+        _new
+          B
+        : B
+        foo
+        (
+        _object
+          self
+        : A
+        _int
+          29
+        : Int
+        )
+      : _no_type
+    )
+  _class
+    B
+    A
+    "badargs1.test"
+    (
+    _method
+      foo
+      _formal
+        b
+        B
+      _formal
+        x
+        Int
+      String
+      _string
+        "moo"
+      : String
+    )

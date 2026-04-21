@@ -1,0 +1,69 @@
+_program
+  _class
+    Main
+    IO
+    "assignment.test"
+    (
+    _attr
+      x
+      Int
+      _no_expr
+      : Object
+    _attr
+      y
+      String
+      _no_expr
+      : Object
+    _attr
+      f
+      Foo
+      _no_expr
+      : Object
+    _method
+      main
+      Object
+      _block
+        _assign
+          x
+          _int
+            3
+          : Int
+        : Object
+        _assign
+          x
+          _int
+            5
+          : Int
+        : Object
+        _assign
+          y
+          _string
+            "test"
+          : String
+        : Object
+        _assign
+          f
+          _new
+            Foo
+          : Foo
+        : Object
+      : Object
+    _method
+      foo
+      String
+      _string
+        "test"
+      : String
+    )
+  _class
+    Foo
+    Object
+    "assignment.test"
+    (
+    _attr
+      x
+      Int
+      _int
+        3
+      : Int
+    )

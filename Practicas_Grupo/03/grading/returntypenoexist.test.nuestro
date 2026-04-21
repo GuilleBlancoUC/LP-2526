@@ -1,0 +1,13 @@
+_program
+  _class
+    Main
+    Object
+    "returntypenoexist.test"
+    (
+    _method
+      main
+      PinkElephant
+      _new
+        PinkElephant
+      : PinkElephant
+    )

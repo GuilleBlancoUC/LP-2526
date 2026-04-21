@@ -1,0 +1,13 @@
+_program
+  _class
+    Main
+    SELF_TYPE
+    "inheritsselftype.test"
+    (
+    _method
+      main
+      Int
+      _int
+        0
+      : Int
+    )

@@ -1,0 +1,34 @@
+_program
+  _class
+    Main
+    Object
+    "inheritsbool.test"
+    (
+    _method
+      main
+      Int
+      _int
+        0
+      : Int
+    )
+  _class
+    A
+    Object
+    "inheritsbool.test"
+    (
+    _method
+      foo
+      _formal
+        x
+        Object
+      SELF_TYPE
+      _object
+        self
+      : A
+    )
+  _class
+    B
+    Bool
+    "inheritsbool.test"
+    (
+    )

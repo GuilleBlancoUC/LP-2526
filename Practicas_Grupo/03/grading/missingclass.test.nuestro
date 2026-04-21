@@ -1,0 +1,28 @@
+_program
+  _class
+    Main
+    Object
+    "missingclass.test"
+    (
+    _method
+      main
+      Int
+      _int
+        0
+      : Int
+    )
+  _class
+    A
+    D
+    "missingclass.test"
+    (
+    _method
+      foo
+      _formal
+        x
+        Int
+      Object
+      _int
+        5
+      : Int
+    )

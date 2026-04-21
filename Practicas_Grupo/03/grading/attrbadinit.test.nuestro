@@ -1,0 +1,36 @@
+_program
+  _class
+    Main
+    Object
+    "attrbadinit.test"
+    (
+    _method
+      main
+      Object
+      _int
+        0
+      : Int
+    )
+  _class
+    Cow
+    Object
+    "attrbadinit.test"
+    (
+    _attr
+      moo
+      Object
+      _no_expr
+      : Object
+    )
+  _class
+    Chicken
+    Object
+    "attrbadinit.test"
+    (
+    _attr
+      sound
+      Object
+      _object
+        moo
+      : Object
+    )

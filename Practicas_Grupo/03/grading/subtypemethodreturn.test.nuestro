@@ -1,0 +1,56 @@
+_program
+  _class
+    A
+    Object
+    "subtypemethodreturn.test"
+    (
+    _method
+      foo
+      A
+      _let
+        x
+        A
+        _no_expr
+        : Object
+        _block
+          _assign
+            x
+            _new
+              A
+            : A
+          : A
+          _dispatch
+            _object
+              x
+            : A
+            foo
+            (
+            )
+          : A
+        : A
+      : A
+    )
+  _class
+    B
+    A
+    "subtypemethodreturn.test"
+    (
+    _method
+      foo
+      A
+      _object
+        self
+      : B
+    )
+  _class
+    Main
+    Object
+    "subtypemethodreturn.test"
+    (
+    _method
+      main
+      Int
+      _int
+        6
+      : Int
+    )

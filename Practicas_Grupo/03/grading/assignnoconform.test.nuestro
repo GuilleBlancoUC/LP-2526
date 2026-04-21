@@ -1,0 +1,38 @@
+_program
+  _class
+    Main
+    Object
+    "assignnoconform.test"
+    (
+    _attr
+      a
+      A
+      _no_expr
+      : Object
+    _attr
+      b
+      B
+      _no_expr
+      : Object
+    _method
+      main
+      Object
+      _assign
+        b
+        _new
+          A
+        : A
+      : Object
+    )
+  _class
+    A
+    Object
+    "assignnoconform.test"
+    (
+    )
+  _class
+    B
+    A
+    "assignnoconform.test"
+    (
+    )
