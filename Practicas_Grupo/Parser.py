@@ -65,12 +65,12 @@ class CoolParser(Parser):
 
     @_("Clase ';'")
     def lista_clases(self, p):
-        p.Clase.linea = int(p.lineno)
+        # p.Clase.linea = int(p.lineno)
         return [p.Clase]
 
     @_("lista_clases Clase ';'")
     def lista_clases(self, p):
-        p.Clase.linea = int(p.lineno)
+        # p.Clase.linea = int(p.lineno)
         return p.lista_clases + [p.Clase]
 
     @_("error ';'")

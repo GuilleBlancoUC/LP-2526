@@ -24,7 +24,7 @@ TESTS = [fich for fich in FICHEROS
          if os.path.isfile(os.path.join(DIR, fich)) and
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$",fich)]
 TESTS.sort()
-# TESTS = ["anattributenamedself.test"]
+# TESTS = ["badredefineint.test"]
 
 if True:
     for fich in TESTS:

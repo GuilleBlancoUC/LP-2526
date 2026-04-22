@@ -591,6 +591,9 @@ class Igual(OperacionBinaria):
     def Tipo(self, ambito):
         self.izquierda.Tipo(ambito)
         self.derecha.Tipo(ambito)
+        basicos = {'Int', 'Bool', 'String'}
+        if (self.izquierda.cast in basicos or self.derecha.cast in basicos) and self.izquierda.cast != self.derecha.cast:
+            errores_semanticos.append(f'{self.linea}: Illegal comparison with a basic type.')
         self.cast = 'Bool'
 
 
@@ -756,8 +759,12 @@ class Programa(IterableNodo):
         ambito = Ambito()
         errores_semanticos.clear()
         # Primer paso: registrar todas las clases para que es_subtipo funcione
+        nombres_vistos = set()
         for c in self.secuencia:
             if isinstance(c, Clase):
+                if c.nombre in nombres_vistos:
+                    errores_semanticos.append(f'{c.linea}: Class {c.nombre} was previously defined.')
+                nombres_vistos.add(c.nombre)
                 ambito.nueva_clase(c.nombre, c.padre)
         # Segundo paso: registrar todos los métodos de todas las clases
         for c in self.secuencia:
@@ -802,6 +809,13 @@ class Clase(Nodo):
         return resultado
 
     def Tipo(self, ambito):
+        basicas = {'Int', 'String', 'Bool', 'Object', 'IO'}
+        no_heredables = {'Int', 'String', 'Bool'}
+        if self.nombre in basicas:
+            errores_semanticos.append(f'{self.linea}: Redefinition of basic class {self.nombre}.')
+            return
+        if self.padre in no_heredables:
+            errores_semanticos.append(f'{self.linea}: Class {self.nombre} cannot inherit class {self.padre}.')
         # Crear un ámbito local para esta clase, con el global como padre,
         # para que los atributos de una clase no contaminen las demás
         ambito_clase = Ambito()
