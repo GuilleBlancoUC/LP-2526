@@ -12,6 +12,7 @@ class Ambito:
         self.nombre_clase = 'Object'  # clase actual en contexto
         self.padre = None             # ámbito padre (para scopes anidados)
         self.atributos_clase = {}     # {clase: set(nombres_atributos)}
+        self.formales_metodos = {}    # {(metodo, clase): [nombres_formales]}
 
         # Clases y métodos built-in
         self.arbol_clases['Object'] = None
@@ -52,8 +53,10 @@ class Ambito:
     def dame_clase(self, nombre):
         return nombre if nombre in self.arbol_clases else None
 
-    def nuevo_metodo(self, nombre, tipo, args, retorno):
+    def nuevo_metodo(self, nombre, tipo, args, retorno, nombres_formales=None):
         self.metodos[(nombre, tipo)] = (args, retorno)
+        if nombres_formales is not None:
+            self.formales_metodos[(nombre, tipo)] = nombres_formales
 
     def dame_metodo_clase(self, nombre_metodo, tipo):
         """Busca el método nombre_metodo en tipo y sus ancestros."""
@@ -239,11 +242,38 @@ class LlamadaMetodo(Expresion):
             a.Tipo(ambito)
         metodo = ambito.dame_metodo_clase(self.nombre_metodo, tipo_cuerpo)
         if metodo:
-            _, retorno = metodo
+            params, retorno = metodo
+            # Comprobar conformidad de argumentos con parámetros formales
+            for i, (arg, param_tipo) in enumerate(zip(self.argumentos, params)):
+                tipo_arg = arg.cast
+                if not ambito.es_subtipo(tipo_arg, param_tipo):
+                    # Obtener nombre del parámetro formal si está disponible
+                    errores_semanticos.append(
+                        f"{self.linea}: In call of method {self.nombre_metodo}, type {tipo_arg} of parameter "
+                        f"{self._nombre_formal(i, tipo_cuerpo, ambito)} does not conform to declared type {param_tipo}."
+                    )
             # SELF_TYPE en retorno significa el tipo del receptor, no la clase actual
             self.cast = tipo_cuerpo if retorno == 'SELF_TYPE' else retorno
         else:
+            errores_semanticos.append(
+                f"{self.linea}: Dispatch to undefined method {self.nombre_metodo}."
+            )
             self.cast = '_no_type'
+
+    def _nombre_formal(self, i, tipo_clase, ambito):
+        """Devuelve el nombre del parámetro formal i-ésimo del método en tipo_clase."""
+        # Buscar en el árbol de clases el método con sus formales
+        tipo = tipo_clase
+        while tipo:
+            if (self.nombre_metodo, tipo) in ambito.metodos:
+                break
+            tipo = ambito.arbol_clases.get(tipo)
+        if tipo and hasattr(ambito, 'formales_metodos'):
+            formales = ambito.formales_metodos.get((self.nombre_metodo, tipo), [])
+            if i < len(formales):
+                return formales[i]
+        # Fallback: usar letra genérica
+        return chr(ord('a') + i)
 
 
 @dataclass
@@ -429,6 +459,10 @@ class Suma(OperacionBinaria):
     def Tipo(self, ambito):
         self.izquierda.Tipo(ambito)
         self.derecha.Tipo(ambito)
+        if self.izquierda.cast != 'Int' or self.derecha.cast != 'Int':
+            errores_semanticos.append(
+                f"{self.linea}: non-Int arguments: {self.izquierda.cast} + {self.derecha.cast}"
+            )
         self.cast = 'Int'
 
 
@@ -447,6 +481,10 @@ class Resta(OperacionBinaria):
     def Tipo(self, ambito):
         self.izquierda.Tipo(ambito)
         self.derecha.Tipo(ambito)
+        if self.izquierda.cast != 'Int' or self.derecha.cast != 'Int':
+            errores_semanticos.append(
+                f"{self.linea}: non-Int arguments: {self.izquierda.cast} - {self.derecha.cast}"
+            )
         self.cast = 'Int'
 
 
@@ -465,6 +503,10 @@ class Multiplicacion(OperacionBinaria):
     def Tipo(self, ambito):
         self.izquierda.Tipo(ambito)
         self.derecha.Tipo(ambito)
+        if self.izquierda.cast != 'Int' or self.derecha.cast != 'Int':
+            errores_semanticos.append(
+                f"{self.linea}: non-Int arguments: {self.izquierda.cast} * {self.derecha.cast}"
+            )
         self.cast = 'Int'
 
 
@@ -483,6 +525,10 @@ class Division(OperacionBinaria):
     def Tipo(self, ambito):
         self.izquierda.Tipo(ambito)
         self.derecha.Tipo(ambito)
+        if self.izquierda.cast != 'Int' or self.derecha.cast != 'Int':
+            errores_semanticos.append(
+                f"{self.linea}: non-Int arguments: {self.izquierda.cast} / {self.derecha.cast}"
+            )
         self.cast = 'Int'
 
 
@@ -719,7 +765,8 @@ class Programa(IterableNodo):
                 for caract in c.caracteristicas:
                     if isinstance(caract, Metodo):
                         args = [f.tipo for f in caract.formales]
-                        ambito.nuevo_metodo(caract.nombre, c.nombre, args, caract.tipo)
+                        nombres = [f.nombre_variable for f in caract.formales]
+                        ambito.nuevo_metodo(caract.nombre, c.nombre, args, caract.tipo, nombres)
         # Tercer paso: chequear tipos
         for c in self.secuencia:
             c.Tipo(ambito)
@@ -765,13 +812,15 @@ class Clase(Nodo):
         for c in self.caracteristicas:
             if isinstance(c, Metodo):
                 args = [f.tipo for f in c.formales]
-                ambito_clase.nuevo_metodo(c.nombre, self.nombre, args, c.tipo)
+                nombres = [f.nombre_variable for f in c.formales]
+                ambito_clase.nuevo_metodo(c.nombre, self.nombre, args, c.tipo, nombres)
         # Segundo paso: registrar atributos propios en el ámbito local
         ambito.atributos_clase[self.nombre] = {c.nombre for c in self.caracteristicas if isinstance(c, Atributo)}
         for c in self.caracteristicas:
             if isinstance(c, Atributo):
                 ambito_clase.nuevo_variable(c.nombre, c.tipo)
         ambito_clase.atributos_clase = ambito.atributos_clase
+        ambito_clase.formales_metodos = ambito.formales_metodos
         # Tercer paso: chequear tipos de métodos y atributos
         for c in self.caracteristicas:
             if isinstance(c, Metodo):

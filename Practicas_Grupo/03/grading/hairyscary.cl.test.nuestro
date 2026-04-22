@@ -1,7 +1,12 @@
 hairyscary.cl.test:12: Undeclared identifier h.
 12: Undeclared identifier h.
+12: non-Int arguments: _no_type + Int
 12: Type Int of assigned expression does not conform to declared type _no_type of identifier h.
 10: Undeclared identifier g.
+10: Dispatch to undefined method doh.
+10: non-Int arguments: Int + _no_type
 31: Undeclared identifier a.
 31: Undeclared identifier g.
+31: Dispatch to undefined method doh.
+31: non-Int arguments: Int + _no_type
 Compilation halted due to static semantic errors.
