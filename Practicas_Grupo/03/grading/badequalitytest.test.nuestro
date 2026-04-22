@@ -20,7 +20,7 @@ _program
       x
       String
       _no_expr
-      : Object
+      : _no_type
     _method
       foo
       _formal

@@ -20,7 +20,7 @@ _program
       moo
       Object
       _no_expr
-      : Object
+      : _no_type
     )
   _class
     Chicken

@@ -8,7 +8,7 @@ _program
       population_map
       String
       _no_expr
-      : Object
+      : _no_type
     _method
       init
       _formal
@@ -21,11 +21,11 @@ _program
           _object
             map
           : String
-        : Object
+        : String
         _object
           self
-        : CellularAutomaton
-      : CellularAutomaton
+        : SELF_TYPE
+      : SELF_TYPE
     _method
       print
       SELF_TYPE
@@ -33,37 +33,37 @@ _program
         _dispatch
           _object
             self
-          : CellularAutomaton
+          : SELF_TYPE
           out_string
           (
           _dispatch
             _object
               population_map
-            : _no_type
+            : String
             concat
             (
             _string
               "\n"
             : String
             )
-          : _no_type
+          : String
           )
         : CellularAutomaton
         _object
           self
-        : CellularAutomaton
-      : CellularAutomaton
+        : SELF_TYPE
+      : SELF_TYPE
     _method
       num_cells
       Int
       _dispatch
         _object
           population_map
-        : _no_type
+        : String
         length
         (
         )
-      : _no_type
+      : Int
     _method
       cell
       _formal
@@ -73,7 +73,7 @@ _program
       _dispatch
         _object
           population_map
-        : _no_type
+        : String
         substr
         (
         _object
@@ -83,7 +83,7 @@ _program
           1
         : Int
         )
-      : _no_type
+      : String
     _method
       cell_left_neighbor
       _formal
@@ -102,14 +102,14 @@ _program
         _dispatch
           _object
             self
-          : CellularAutomaton
+          : SELF_TYPE
           cell
           (
           _sub
             _dispatch
               _object
                 self
-              : CellularAutomaton
+              : SELF_TYPE
               num_cells
               (
               )
@@ -123,7 +123,7 @@ _program
         _dispatch
           _object
             self
-          : CellularAutomaton
+          : SELF_TYPE
           cell
           (
           _sub
@@ -152,7 +152,7 @@ _program
             _dispatch
               _object
                 self
-              : CellularAutomaton
+              : SELF_TYPE
               num_cells
               (
               )
@@ -165,7 +165,7 @@ _program
         _dispatch
           _object
             self
-          : CellularAutomaton
+          : SELF_TYPE
           cell
           (
           _int
@@ -176,7 +176,7 @@ _program
         _dispatch
           _object
             self
-          : CellularAutomaton
+          : SELF_TYPE
           cell
           (
           _plus
@@ -205,7 +205,7 @@ _program
                   _dispatch
                     _object
                       self
-                    : CellularAutomaton
+                    : SELF_TYPE
                     cell
                     (
                     _object
@@ -229,7 +229,7 @@ _program
                   _dispatch
                     _object
                       self
-                    : CellularAutomaton
+                    : SELF_TYPE
                     cell_left_neighbor
                     (
                     _object
@@ -254,7 +254,7 @@ _program
                 _dispatch
                   _object
                     self
-                  : CellularAutomaton
+                  : SELF_TYPE
                   cell_right_neighbor
                   (
                   _object
@@ -292,14 +292,14 @@ _program
         position
         Int
         _no_expr
-        : Object
+        : _no_type
         _let
           num
           Int
           _dispatch
             _object
               self
-            : CellularAutomaton
+            : SELF_TYPE
             num_cells
             (
             )
@@ -308,7 +308,7 @@ _program
             temp
             String
             _no_expr
-            : Object
+            : _no_type
             _block
               _loop
                 _lt
@@ -331,7 +331,7 @@ _program
                       _dispatch
                         _object
                           self
-                        : CellularAutomaton
+                        : SELF_TYPE
                         cell_at_next_evolution
                         (
                         _object
@@ -360,14 +360,14 @@ _program
                 _object
                   temp
                 : String
-              : Object
+              : String
               _object
                 self
-              : CellularAutomaton
-            : CellularAutomaton
-          : CellularAutomaton
-        : CellularAutomaton
-      : CellularAutomaton
+              : SELF_TYPE
+            : SELF_TYPE
+          : SELF_TYPE
+        : SELF_TYPE
+      : SELF_TYPE
     )
   _class
     Main
@@ -378,7 +378,7 @@ _program
       cells
       CellularAutomaton
       _no_expr
-      : Object
+      : _no_type
     _method
       main
       SELF_TYPE
@@ -396,15 +396,15 @@ _program
             : String
             )
           : CellularAutomaton
-        : Object
+        : CellularAutomaton
         _dispatch
           _object
             cells
-          : _no_type
+          : CellularAutomaton
           print
           (
           )
-        : _no_type
+        : CellularAutomaton
         _let
           countdown
           Int
@@ -424,19 +424,19 @@ _program
               _dispatch
                 _object
                   cells
-                : _no_type
+                : CellularAutomaton
                 evolve
                 (
                 )
-              : _no_type
+              : CellularAutomaton
               _dispatch
                 _object
                   cells
-                : _no_type
+                : CellularAutomaton
                 print
                 (
                 )
-              : _no_type
+              : CellularAutomaton
               _assign
                 countdown
                 _sub
@@ -453,6 +453,6 @@ _program
         : Object
         _object
           self
-        : Main
-      : Main
+        : SELF_TYPE
+      : SELF_TYPE
     )

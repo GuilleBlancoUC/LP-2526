@@ -24,7 +24,7 @@ _program
       SELF_TYPE
       _object
         self
-      : A
+      : SELF_TYPE
     )
   _class
     B

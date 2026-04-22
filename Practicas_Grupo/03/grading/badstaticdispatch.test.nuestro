@@ -20,7 +20,7 @@ _program
       x
       String
       _no_expr
-      : Object
+      : _no_type
     _method
       foo
       _formal
@@ -62,10 +62,10 @@ _program
       _static_dispatch
         _object
           self
-        : B
+        : SELF_TYPE
         C
         bar
         (
         )
-      : _no_type
+      : Object
     )

@@ -11,7 +11,7 @@ _program
         self
         Int
         _no_expr
-        : Object
+        : _no_type
         _int
           0
         : Int

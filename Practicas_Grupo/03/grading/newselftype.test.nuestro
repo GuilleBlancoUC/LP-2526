@@ -10,7 +10,7 @@ _program
       _dispatch
         _object
           self
-        : A
+        : SELF_TYPE
         foo
         (
         _new

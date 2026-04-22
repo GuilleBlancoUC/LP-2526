@@ -12,7 +12,7 @@ _program
           x
           Int
           _no_expr
-          : Object
+          : _no_type
           _int
             10
           : Int

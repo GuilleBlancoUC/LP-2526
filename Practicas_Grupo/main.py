@@ -24,7 +24,7 @@ TESTS = [fich for fich in FICHEROS
          if os.path.isfile(os.path.join(DIR, fich)) and
          re.search(r"^[a-zA-Z].*\.(cool|test|cl)$",fich)]
 TESTS.sort()
-#TESTS = ["basic.test"]
+# TESTS = ["anattributenamedself.test"]
 
 if True:
     for fich in TESTS:
@@ -69,13 +69,21 @@ if True:
             g.close()
             j = parser.parse(lexer.tokenize(entrada))
             try:
-                j.Tipo()
+                if PRACTICA == '03':
+                    j.Tipo()
                 if j and not parser.errores:
                     resultado = '\n'.join([c for c in j.str(0).split('\n')
                                            if c and '#' not in c])
                 else:
                     resultado = '\n'.join(parser.errores)
-                    resultado += '\n' + "Compilation halted due to lex and parse errors"
+                    if PRACTICA == '03':
+                        resultado += fich + ":"
+                        resultado += '\n'.join(errores_semanticos)
+                        resultado += '\n' + "Compilation halted due to static semantic errors."
+                    else:
+                        resultado += '\n' + "Compilation halted due to lex and parse errors"
+                    
+
                 if resultado.lower().strip().split() != bien.lower().strip().split():
                     print(f"Revisa el fichero {fich}")
                     if DEBUG:

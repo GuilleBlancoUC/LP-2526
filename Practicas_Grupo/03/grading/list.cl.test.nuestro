@@ -17,7 +17,7 @@ _program
         _dispatch
           _object
             self
-          : List
+          : SELF_TYPE
           abort
           (
           )
@@ -33,15 +33,15 @@ _program
         _dispatch
           _object
             self
-          : List
+          : SELF_TYPE
           abort
           (
           )
         : Object
         _object
           self
-        : List
-      : List
+        : SELF_TYPE
+      : SELF_TYPE
     _method
       cons
       _formal
@@ -59,9 +59,9 @@ _program
         : Int
         _object
           self
-        : List
+        : SELF_TYPE
         )
-      : _no_type
+      : List
     )
   _class
     Cons
@@ -72,12 +72,12 @@ _program
       car
       Int
       _no_expr
-      : Object
+      : _no_type
     _attr
       cdr
       List
       _no_expr
-      : Object
+      : _no_type
     _method
       isNil
       Bool
@@ -89,13 +89,13 @@ _program
       Int
       _object
         car
-      : _no_type
+      : Int
     _method
       tail
       List
       _object
         cdr
-      : _no_type
+      : List
     _method
       init
       _formal
@@ -111,17 +111,17 @@ _program
           _object
             i
           : Int
-        : Object
+        : Int
         _assign
           cdr
           _object
             rest
           : List
-        : Object
+        : List
         _object
           self
-        : Cons
-      : Cons
+        : SELF_TYPE
+      : SELF_TYPE
     )
   _class
     Main
@@ -132,7 +132,7 @@ _program
       mylist
       List
       _no_expr
-      : Object
+      : _no_type
     _method
       print_list
       _formal
@@ -151,7 +151,7 @@ _program
         _dispatch
           _object
             self
-          : Main
+          : SELF_TYPE
           out_string
           (
           _string
@@ -163,7 +163,7 @@ _program
           _dispatch
             _object
               self
-            : Main
+            : SELF_TYPE
             out_int
             (
             _dispatch
@@ -179,7 +179,7 @@ _program
           _dispatch
             _object
               self
-            : Main
+            : SELF_TYPE
             out_string
             (
             _string
@@ -190,7 +190,7 @@ _program
           _dispatch
             _object
               self
-            : Main
+            : SELF_TYPE
             print_list
             (
             _dispatch
@@ -254,28 +254,28 @@ _program
             : Int
             )
           : List
-        : Object
+        : List
         _loop
           _comp
             _dispatch
               _object
                 mylist
-              : _no_type
+              : List
               isNil
               (
               )
-            : _no_type
+            : Bool
           : Bool
           _block
             _dispatch
               _object
                 self
-              : Main
+              : SELF_TYPE
               print_list
               (
               _object
                 mylist
-              : _no_type
+              : List
               )
             : Object
             _assign
@@ -283,13 +283,13 @@ _program
               _dispatch
                 _object
                   mylist
-                : _no_type
+                : List
                 tail
                 (
                 )
-              : _no_type
-            : _no_type
-          : _no_type
+              : List
+            : List
+          : List
         : Object
       : Object
     )

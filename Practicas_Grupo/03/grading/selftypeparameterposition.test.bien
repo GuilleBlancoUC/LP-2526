@@ -1,1 +1,1 @@
-selftypeparameterposition.test:4: Formal parameter x cannot have type SELF_TYPE.Compilation halted due to static semantic errors.
+selftypeparameterposition.test:4: Formal parameter x cannot have type SELF_TYPE.Compilation halted due to static semantic errors.

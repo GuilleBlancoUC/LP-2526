@@ -21,7 +21,7 @@ _program
       A
       _object
         self
-      : A
+      : SELF_TYPE
     _method
       foo
       _formal
@@ -33,7 +33,7 @@ _program
         _dispatch
           _object
             self
-          : A
+          : SELF_TYPE
           copy
           (
           )

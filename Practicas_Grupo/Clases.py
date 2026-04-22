@@ -2,11 +2,12 @@
 from dataclasses import dataclass, field
 from typing import List
 
+errores_semanticos = []
+
 class Ambito:
     def __init__(self):
         self.variables = {}
         self.metodos = {}
-        self.errores = []
         self.arbol_clases = {}
         self.nombre_clase = 'Object'  # clase actual en contexto
         self.padre = None             # ámbito padre (para scopes anidados)
@@ -165,7 +166,7 @@ class Asignacion(Expresion):
         if ambito.es_subtipo(ambito.get_tipo_variable(self.nombre), self.cuerpo.cast):
             self.cast = self.cuerpo.cast
         else:
-            self.cast = 'Object'
+            self.cast = self.cuerpo.cast  # Dejar el tipo del cuerpo para que el error sea más informativo
 
 
 @dataclass
@@ -184,7 +185,7 @@ class LlamadaMetodoEstatico(Expresion):
         resultado += f'{(n+2)*" "}(\n'
         resultado += ''.join([c.str(n+2) for c in self.argumentos])
         resultado += f'{(n+2)*" "})\n'
-        resultado += f'{(n)*" "}: _no_type\n'
+        resultado += f'{(n)*" "}: {self.cast}\n'
         return resultado
 
     def Tipo(self, ambito):
@@ -400,7 +401,6 @@ class Nueva(Nodo):
         else:
             self.cast = self.tipo
 
-
 @dataclass
 class OperacionBinaria(Expresion):
     izquierda: Expresion = None
@@ -606,7 +606,10 @@ class Objeto(Expresion):
         return resultado
 
     def Tipo(self, ambito):
-        self.cast = ambito.dame_tipo_variable(self.nombre)
+        if self.nombre == 'self':
+            self.cast = 'SELF_TYPE'
+        else:
+            self.cast = ambito.dame_tipo_variable(self.nombre)
 
 
 @dataclass
@@ -620,7 +623,7 @@ class NoExpr(Expresion):
         return resultado
 
     def Tipo(self, ambito):
-        self.cast = 'Object'
+        self.cast = '_no_type'
 
 
 @dataclass
@@ -697,11 +700,19 @@ class Programa(IterableNodo):
 
     def Tipo(self):
         ambito = Ambito()
+        errores_semanticos.clear()
         # Primer paso: registrar todas las clases para que es_subtipo funcione
         for c in self.secuencia:
             if isinstance(c, Clase):
                 ambito.nueva_clase(c.nombre, c.padre)
-        # Segundo paso: chequear tipos
+        # Segundo paso: registrar todos los métodos de todas las clases
+        for c in self.secuencia:
+            if isinstance(c, Clase):
+                for caract in c.caracteristicas:
+                    if isinstance(caract, Metodo):
+                        args = [f.tipo for f in caract.formales]
+                        ambito.nuevo_metodo(caract.nombre, c.nombre, args, caract.tipo)
+        # Tercer paso: chequear tipos
         for c in self.secuencia:
             c.Tipo(ambito)
 
@@ -742,7 +753,11 @@ class Clase(Nodo):
             if isinstance(c, Metodo):
                 args = [f.tipo for f in c.formales]
                 ambito.nuevo_metodo(c.nombre, self.nombre, args, c.tipo)
-        # Segundo paso: chequear tipos de métodos y atributos
+        # Segundo paso: registrar atributos en el ámbito
+        for c in self.caracteristicas:
+            if isinstance(c, Atributo):
+                ambito.nuevo_variable(c.nombre, c.tipo)
+        # Tercer paso: chequear tipos de métodos y atributos
         for c in self.caracteristicas:
             if isinstance(c, Metodo):
                 c.Tipo(ambito)
@@ -784,6 +799,8 @@ class Atributo(Caracteristica):
 
     def Tipo(self, ambito):
         ambito.nuevo_variable(self.nombre, self.tipo)
+        if self.nombre == 'self':
+            errores_semanticos.append(f"{self.linea}: 'self' cannot be the name of an attribute.")   
         if self.cuerpo:
             self.cuerpo.Tipo(ambito)
             self.cast = self.tipo

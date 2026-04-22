@@ -27,12 +27,12 @@ _program
         (
         _object
           self
-        : A
+        : SELF_TYPE
         _int
           29
         : Int
         )
-      : _no_type
+      : String
     )
   _class
     B

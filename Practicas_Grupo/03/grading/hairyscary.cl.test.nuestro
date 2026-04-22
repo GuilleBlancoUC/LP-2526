@@ -10,7 +10,7 @@ _program
       _typcase
         _object
           self
-        : Foo
+        : SELF_TYPE
         _branch
           n
           Razz
@@ -56,7 +56,7 @@ _program
           _dispatch
             _object
               self
-            : Foo
+            : SELF_TYPE
             doh
             (
             )
@@ -65,11 +65,11 @@ _program
         _dispatch
           _object
             self
-          : Foo
+          : SELF_TYPE
           printh
           (
           )
-        : _no_type
+        : Int
       : Int
     _method
       doh
@@ -91,7 +91,7 @@ _program
                 2
               : Int
             : Int
-          : Object
+          : Int
           _object
             i
           : Int
@@ -109,7 +109,7 @@ _program
       _dispatch
         _object
           self
-        : Bar
+        : SELF_TYPE
         doh
         (
         )
@@ -120,11 +120,11 @@ _program
       _dispatch
         _object
           self
-        : Bar
+        : SELF_TYPE
         printh
         (
         )
-      : _no_type
+      : Int
     )
   _class
     Razz
@@ -137,7 +137,7 @@ _program
       _typcase
         _object
           self
-        : Razz
+        : SELF_TYPE
         _branch
           n
           Razz
@@ -166,7 +166,7 @@ _program
                 doh
                 (
                 )
-              : _no_type
+              : Int
               _dispatch
                 _object
                   g
@@ -188,7 +188,7 @@ _program
           _dispatch
             _object
               self
-            : Razz
+            : SELF_TYPE
             doh
             (
             )
@@ -197,11 +197,11 @@ _program
         _dispatch
           _object
             self
-          : Razz
+          : SELF_TYPE
           printh
           (
           )
-        : _no_type
+        : Int
       : Int
     )
   _class
@@ -221,7 +221,7 @@ _program
       _typcase
         _object
           self
-        : Bazz
+        : SELF_TYPE
         _branch
           n
           Bazz
@@ -253,7 +253,7 @@ _program
       _dispatch
         _object
           self
-        : Bazz
+        : SELF_TYPE
         printh
         (
         )
@@ -265,12 +265,12 @@ _program
         _dispatch
           _object
             self
-          : Bazz
+          : SELF_TYPE
           out_int
           (
           _object
             h
-          : _no_type
+          : Int
           )
         : Bazz
         _int
@@ -285,19 +285,19 @@ _program
         Int
         _object
           h
-        : _no_type
+        : Int
         _block
           _assign
             h
             _plus
               _object
                 h
-              : _no_type
+              : Int
               _int
                 1
               : Int
             : Int
-          : Object
+          : Int
           _object
             i
           : Int

@@ -8,12 +8,12 @@ _program
       a
       A
       _no_expr
-      : Object
+      : _no_type
     _attr
       b
       B
       _no_expr
-      : Object
+      : _no_type
     _method
       main
       Object
@@ -22,7 +22,7 @@ _program
         _new
           A
         : A
-      : Object
+      : A
     )
   _class
     A

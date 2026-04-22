@@ -50,27 +50,27 @@ _program
       a
       A
       _no_expr
-      : Object
+      : _no_type
     _attr
       b
       B
       _no_expr
-      : Object
+      : _no_type
     _attr
       c
       C
       _no_expr
-      : Object
+      : _no_type
     _attr
       d
       D
       _no_expr
-      : Object
+      : _no_type
     _attr
       z
       Z
       _no_expr
-      : Object
+      : _no_type
     _method
       f
       Z
@@ -80,11 +80,11 @@ _program
         : Bool
         _object
           a
-        : _no_type
+        : A
         _object
           b
-        : _no_type
-      : _no_type
+        : B
+      : Z
     _method
       g
       Object
@@ -94,11 +94,11 @@ _program
         : Bool
         _object
           a
-        : _no_type
+        : A
         _object
           b
-        : _no_type
-      : _no_type
+        : B
+      : Z
     _method
       h
       B
@@ -108,9 +108,9 @@ _program
         : Bool
         _object
           c
-        : _no_type
+        : C
         _object
           a
-        : _no_type
-      : _no_type
+        : A
+      : Z
     )

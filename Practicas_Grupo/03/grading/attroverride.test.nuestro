@@ -20,7 +20,7 @@ _program
       moo
       A
       _no_expr
-      : Object
+      : _no_type
     )
   _class
     B
@@ -31,5 +31,5 @@ _program
       moo
       B
       _no_expr
-      : Object
+      : _no_type
     )

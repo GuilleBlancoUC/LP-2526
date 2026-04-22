@@ -25,13 +25,13 @@ _program
       _dispatch
         _object
           self
-        : A
+        : SELF_TYPE
         f
         (
         _dispatch
           _object
             self
-          : A
+          : SELF_TYPE
           f
           (
           _int

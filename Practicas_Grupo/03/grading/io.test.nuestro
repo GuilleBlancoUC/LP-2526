@@ -8,12 +8,12 @@ _program
       x
       Int
       _no_expr
-      : Object
+      : _no_type
     _attr
       y
       String
       _no_expr
-      : Object
+      : _no_type
     _method
       main
       Object
@@ -21,7 +21,7 @@ _program
         _dispatch
           _object
             self
-          : Main
+          : SELF_TYPE
           out_string
           (
           _string
@@ -32,7 +32,7 @@ _program
         _dispatch
           _object
             self
-          : Main
+          : SELF_TYPE
           out_int
           (
           _int
@@ -45,22 +45,22 @@ _program
           _dispatch
             _object
               self
-            : Main
+            : SELF_TYPE
             in_string
             (
             )
           : String
-        : Object
+        : String
         _assign
           x
           _dispatch
             _object
               self
-            : Main
+            : SELF_TYPE
             in_int
             (
             )
           : Int
-        : Object
-      : Object
+        : Int
+      : Int
     )
