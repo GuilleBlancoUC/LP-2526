@@ -71,7 +71,7 @@ if True:
             try:
                 if PRACTICA == '03':
                     j.Tipo()
-                if j and not parser.errores:
+                if j and not parser.errores and not errores_semanticos:
                     resultado = '\n'.join([c for c in j.str(0).split('\n')
                                            if c and '#' not in c])
                 else:
