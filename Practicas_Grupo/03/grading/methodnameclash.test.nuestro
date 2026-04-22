@@ -1,0 +1,3 @@
+methodnameclash.test:3: Undeclared identifier x.
+4: Undeclared identifier y.
+Compilation halted due to static semantic errors.

@@ -7,7 +7,7 @@ from termcolor import colored ## Para coloredear la salida en la terminal
 #init()
 
 
-DIRECTORIO = os.path.expanduser("./")
+DIRECTORIO = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(DIRECTORIO)
 
 from Lexer import *

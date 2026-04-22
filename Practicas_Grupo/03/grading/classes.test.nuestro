@@ -1,0 +1,6 @@
+classes.test:11: Undeclared identifier a.
+12: Undeclared identifier a.
+12: Type Int of assigned expression does not conform to declared type _no_type of identifier a.
+17: Undeclared identifier a.
+17: Type Int of assigned expression does not conform to declared type _no_type of identifier a.
+Compilation halted due to static semantic errors.

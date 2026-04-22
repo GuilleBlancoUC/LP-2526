@@ -11,6 +11,7 @@ class Ambito:
         self.arbol_clases = {}
         self.nombre_clase = 'Object'  # clase actual en contexto
         self.padre = None             # ámbito padre (para scopes anidados)
+        self.atributos_clase = {}     # {clase: set(nombres_atributos)}
 
         # Clases y métodos built-in
         self.arbol_clases['Object'] = None
@@ -163,10 +164,13 @@ class Asignacion(Expresion):
 
     def Tipo(self, ambito):
         self.cuerpo.Tipo(ambito)
-        if ambito.es_subtipo(ambito.get_tipo_variable(self.nombre), self.cuerpo.cast):
-            self.cast = self.cuerpo.cast
-        else:
-            self.cast = self.cuerpo.cast  # Dejar el tipo del cuerpo para que el error sea más informativo
+        tipo_variable = ambito.get_tipo_variable(self.nombre)
+        tipo_cuerpo = self.cuerpo.cast
+        self.cast = tipo_cuerpo
+        if not ambito.es_subtipo(tipo_cuerpo, tipo_variable):
+            errores_semanticos.append(
+                f"{self.linea}: Type {tipo_cuerpo} of assigned expression does not conform to declared type {tipo_variable} of identifier {self.nombre}."
+            )
 
 
 @dataclass
@@ -610,6 +614,10 @@ class Objeto(Expresion):
             self.cast = 'SELF_TYPE'
         else:
             self.cast = ambito.dame_tipo_variable(self.nombre)
+            if self.cast == '_no_type':
+                errores_semanticos.append(
+                    f"{self.linea}: Undeclared identifier {self.nombre}."
+                )
 
 
 @dataclass
@@ -747,23 +755,30 @@ class Clase(Nodo):
         return resultado
 
     def Tipo(self, ambito):
-        ambito.nombre_clase = self.nombre
-        # Primer paso: registrar métodos para que las llamadas los encuentren
+        # Crear un ámbito local para esta clase, con el global como padre,
+        # para que los atributos de una clase no contaminen las demás
+        ambito_clase = Ambito()
+        ambito_clase.arbol_clases = ambito.arbol_clases
+        ambito_clase.metodos = ambito.metodos
+        ambito_clase.nombre_clase = self.nombre
+        # Primer paso: registrar métodos
         for c in self.caracteristicas:
             if isinstance(c, Metodo):
                 args = [f.tipo for f in c.formales]
-                ambito.nuevo_metodo(c.nombre, self.nombre, args, c.tipo)
-        # Segundo paso: registrar atributos en el ámbito
+                ambito_clase.nuevo_metodo(c.nombre, self.nombre, args, c.tipo)
+        # Segundo paso: registrar atributos propios en el ámbito local
+        ambito.atributos_clase[self.nombre] = {c.nombre for c in self.caracteristicas if isinstance(c, Atributo)}
         for c in self.caracteristicas:
             if isinstance(c, Atributo):
-                ambito.nuevo_variable(c.nombre, c.tipo)
+                ambito_clase.nuevo_variable(c.nombre, c.tipo)
+        ambito_clase.atributos_clase = ambito.atributos_clase
         # Tercer paso: chequear tipos de métodos y atributos
         for c in self.caracteristicas:
             if isinstance(c, Metodo):
-                c.Tipo(ambito)
+                c.Tipo(ambito_clase)
         for c in self.caracteristicas:
             if isinstance(c, Atributo):
-                c.Tipo(ambito)
+                c.Tipo(ambito_clase)
 
 
 @dataclass
@@ -800,7 +815,14 @@ class Atributo(Caracteristica):
     def Tipo(self, ambito):
         ambito.nuevo_variable(self.nombre, self.tipo)
         if self.nombre == 'self':
-            errores_semanticos.append(f"{self.linea}: 'self' cannot be the name of an attribute.")   
+            errores_semanticos.append(f"{self.linea}: 'self' cannot be the name of an attribute.")
+        # Comprobar si el atributo está definido en alguna clase ancestro
+        padre = ambito.arbol_clases.get(ambito.nombre_clase)
+        while padre is not None:
+            if self.nombre in ambito.atributos_clase.get(padre, set()):
+                errores_semanticos.append(f"{self.linea}: Attribute {self.nombre} is an attribute of an inherited class.")
+                break
+            padre = ambito.arbol_clases.get(padre)   
         if self.cuerpo:
             self.cuerpo.Tipo(ambito)
             self.cast = self.tipo
